@@ -1,0 +1,41 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Feb 28, 2021, 8:16:33 PM
+    Author     : lenovo
+*/
+
+
+#pane-win{
+    -fx-background-image: url("bigwin.jpg") ;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+    -fx-background-position: center;
+    -fx-background-size: 100% 100%;
+    -fx-background-attachment: fixed;
+        
+}
+
+
+#button-win{
+    -fx-alignment:CENTER;
+     -fx-background-color: transparent;
+  -fx-font-size:2em;
+ -fx-font-family: "jokerman";
+ -fx-text-alignment: center;
+ -fx-border-width: 3px; 
+ -fx-border-color: cyan;
+ -fx-text-fill:cyan;
+ -fx-border-radius: 50%;
+  -fx-font-weight: bolder;
+
+}
+
+#button-win:hover {
+ -fx-border-color: derive(cyan, -20%);
+ -fx-text-fill:derive(cyan, -20%);
+}

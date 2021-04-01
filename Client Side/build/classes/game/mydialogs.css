@@ -1,0 +1,36 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Feb 23, 2021, 10:09:45 PM
+    Author     : omniahassan
+*/
+
+
+
+.myDialog{
+     -fx-background-color: linear-gradient(to bottom,white, indigo);
+   
+}
+.myDialog > *.button-bar > *.container{
+    /*    -fx-background-color: green;*/
+}
+.myDialog > *.label.content{
+
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+     -fx-text-fill:black;
+    /*    -fx-height:1px;*/
+}
+.myDialog:header *.header-panel{
+    -fx-background-color: linear-gradient(to bottom, blue, purple);
+    -fx-font-color : white;
+    /*    -fx-background-color: yellow;*/
+}
+.myDialog:header *.header-panel *.label{
+    -fx-font-size: 14px;
+    -fx-font-style: italic;
+    -fx-fill: #292929;
+}

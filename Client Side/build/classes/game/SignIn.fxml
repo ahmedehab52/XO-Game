@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox id="VBox" alignment="CENTER_LEFT" prefHeight="480.0" prefWidth="480.0" styleClass="white-pane" stylesheets="@stylesheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.SignInController">
+   <children>
+      <Label text="Sign In" textFill="WHITE">
+         <font>
+            <Font size="23.0" />
+         </font>
+         <VBox.margin>
+            <Insets left="20.0" right="15.0" top="20.0" />
+         </VBox.margin>
+      </Label>
+      <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="200.0" styleClass="tf_box">
+         <VBox.margin>
+            <Insets left="15.0" right="15.0" top="20.0" />
+         </VBox.margin>
+         <children>
+            <TextField fx:id="textemail" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="User Name" styleClass="tf" HBox.hgrow="ALWAYS">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </TextField>
+            <FontAwesomeIcon fill="#0000004d" glyphStyle="gray" iconName="USER" size="1.5em" wrappingWidth="27.142857551574707" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" layoutX="25.0" layoutY="263.0" prefHeight="45.0" prefWidth="200.0" styleClass="tf_box">
+         <children>
+            <PasswordField fx:id="textpass" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="44.0" prefWidth="603.0" promptText="Password" styleClass="tf">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </PasswordField>
+            <TextField id="textpass" accessibleRole="PASSWORD_FIELD" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="tf" HBox.hgrow="ALWAYS">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </TextField>
+            <FontAwesomeIcon fill="#0000004d" glyphStyle="grey" iconName="LOCK" size="1.5em" wrappingWidth="27.571428298950195" />
+         </children>
+         <VBox.margin>
+            <Insets left="15.0" right="15.0" top="20.0" />
+         </VBox.margin>
+      </HBox>
+      <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="285.0" prefHeight="45.0" prefWidth="200.0">
+         <VBox.margin>
+            <Insets left="15.0" right="15.0" top="20.0" />
+         </VBox.margin>
+         <children>
+            <JFXButton fx:id="butsin" onAction="#signInMethod" prefHeight="39.0" prefWidth="120.0" ripplerFill="WHITE" styleClass="pink-btn" text="Sign In">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </JFXButton>
+         </children>
+      </HBox>
+   </children>
+</VBox>

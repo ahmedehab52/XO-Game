@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+
+<TableView maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="580.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/9.0.1">
+  <columns>
+    <TableColumn prefWidth="52.0" text="game Id" />
+    <TableColumn prefWidth="337.0" text="game Name" />
+      <TableColumn prefWidth="410.0" text="game Time" />
+  </columns>
+</TableView>

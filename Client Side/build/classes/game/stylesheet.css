@@ -1,0 +1,52 @@
+
+.parent{
+    -fx-background-color:transparent;
+}
+
+.pane{
+     -fx-background-image: url("backgroundsign.jpg") ;
+}
+
+.trans-btn-white-border{
+    -fx-background-color:transparent;
+    -fx-background-radius:5px;
+    -fx-border-color:#cccccc;
+    -fx-border-radius:5px;
+    -fx-border-width:1px;
+    -fx-text-fill:whitesmoke;
+    -fx-cursor: hand;
+
+}
+.white-pane{
+  /*  -fx-background-color:#FFFFFF;*/
+     -fx-background-image: url("backgroundsign5.jpg") ;
+       -fx-border-color:goldenrod;
+    -fx-border-width:1px 1px 1px 1px;   
+}
+
+
+
+
+.tf_box{
+    -fx-background-color:#ffffff;
+   
+     
+    
+}
+.tf{
+    -fx-background-color:transparent; 
+   
+   
+}
+.pink-btn{
+    -fx-background-color:goldenrod;
+    -fx-background-radius:5px;
+    -fx-text-fill:white;
+     -fx-cursor: hand;
+}
+
+.string{
+    
+    -fx-background-image: url("backgroundsign3.jpg") ; 
+    
+}
