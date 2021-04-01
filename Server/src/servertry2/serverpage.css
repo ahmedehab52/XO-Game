@@ -1,0 +1,83 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Feb 28, 2021, 9:22:19 PM
+    Author     : lenovo
+*/
+
+
+#pane{
+    -fx-background-image: url("background.jpg") ;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+    -fx-background-position: center;
+    -fx-background-size: 100% 100%;
+    -fx-background-attachment: fixed;
+        
+}
+
+#TextField
+{
+   
+    -fx-font-style: italic;
+   -fx-font-family: "Arial Black";
+   -fx-fill: #818181;
+   -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
+     -fx-font-weight: bold;
+     -fx-fill: #FFCC33;
+}
+
+
+
+
+#Password
+{
+   
+    -fx-font-style: italic;
+   -fx-font-family: "Arial Black";
+   -fx-fill: #818181;
+   -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
+     -fx-font-weight: bold;
+     -fx-fill: #FFCC33;
+}
+
+
+#Button {
+    -fx-fill: #818181;
+   -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
+    -fx-background-radius: 5,4,3,5;
+    -fx-background-insets: 0,1,2,0;
+    -fx-background-color: 
+        linear-gradient(#686868 0%, #232723 25%, #373837 75%, #757575 100%),
+        linear-gradient(#020b02, #3a3a3a),
+        linear-gradient(#9d9e9d 0%, #6b6a6b 20%, #343534 80%, #242424 100%),
+        linear-gradient(#8a8a8a 0%, #6b6a6b 20%, #343534 80%, #262626 100%),
+        linear-gradient(#777777 0%, #606060 50%, #505250 51%, #2a2b2a 100%);
+    -fx-background-insets: 0,1,4,5,6;
+    -fx-background-radius: 9,8,5,4,3;
+    -fx-padding: 10 30 10 30;
+    -fx-font-family: "Copperplate";
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+     -fx-text-fill : thistle ;
+  
+   -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
+   -fx-background-color: 
+        linear-gradient(#686868 0%, #232723 25%, #373837 75%, #757575 100%),
+        linear-gradient(#020b02, #3a3a3a),
+        linear-gradient(#9d9e9d 0%, #6b6a6b 20%, #343534 80%, #242424 100%),
+        linear-gradient(#8a8a8a 0%, #6b6a6b 20%, #343534 80%, #262626 100%),
+        linear-gradient(#777777 0%, #606060 50%, #505250 51%, #2a2b2a 100%);
+      -fx-effect: dropshadow( three-pass-box , rgba(255,255,255,0.2) , 1, 0.0 , 0 , 1);  
+
+}
+
+Button:hover {
+ -fx-border-color: derive(cyan, -20%);
+ -fx-text-fill:derive(cyan, -20%);
+}
+   
