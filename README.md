@@ -4,4 +4,4 @@ you can play this game with remote friend via internet
 A score board is also present at the side to display the scores of every game played.
 
 # Used language
-Java (javafx).
+Java ( javafx ).
