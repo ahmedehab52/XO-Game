@@ -19,11 +19,13 @@ import java.util.logging.Logger;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
+
+
 public class Server {
 
     ServerSocket serverSocket;
     static DataBase mydb;
-    
+
     public Server(String name, String pass) {
         System.out.println("Sever is Up");
         mydb = new DataBase(name, pass);
@@ -39,26 +41,28 @@ public class Server {
         }
     }
 
-
 }
 
 class ChatHandler extends Thread {
 
+    Socket mycs;
+    String myRec;
     DataInputStream dis;
     PrintStream ps;
-    static String id = "X";
-    
+    String firstPlayerId;
+    String secondPlayerId;
+
+    static String symbol = "X";
+    public PlayerInformation playerInfo = new PlayerInformation();
     static Vector<ChatHandler> clientsVector = new Vector<ChatHandler>();
-    static Vector<User> userVector = new Vector<User>();//Creating HashMap 
+    static HashMap<Integer, ChatHandler> clients = new HashMap<Integer, ChatHandler>();
+
+    static HashMap<Integer, Game> runningGames = new HashMap<Integer, Game>();
 
     public ChatHandler(Socket cs, String name, String pass) {
-
-       
         try {
             dis = new DataInputStream(cs.getInputStream());
             ps = new PrintStream(cs.getOutputStream());
-            ps.println(id);
-            id = "O";
         } catch (IOException exce) {
             exce.printStackTrace();
         }
@@ -72,7 +76,26 @@ class ChatHandler extends Thread {
                 String str = dis.readLine();
                 if (str.contains("db")) {
                     dbQuery(str);
+                } else if (str.startsWith("Two Players Game")) {
+                    ps.println(symbol);
+                    if (symbol == "X") {
+                        String[] arr = str.split("\\:");
+                        this.firstPlayerId = arr[1];
+                        System.out.println("f" + firstPlayerId);
+                        symbol = "O";
+                    } else {
+                        String[] arr = str.split("\\:");
+                        this.secondPlayerId = arr[1];
+                        System.out.println("s" + secondPlayerId);
+                        symbol = "X";
+                    }
+                } else if (str.contains("Rec")) {
+                    myRec = str;
+                    System.out.println(myRec);
+                } else if (str.contains("Replay")) {
+                    sendMessageToAll(myRec);
                 } else {
+                    System.out.println(str);
                     sendMessageToAll(str);
                 }
             } catch (IOException e) {
@@ -90,58 +113,45 @@ class ChatHandler extends Thread {
 
     void dbQuery(String s) {
         String[] Resarr;
-        ResultSet rs = null;
+        String gmaeTable = "";
+        ResultSet rs;
         int u = 0;  //result of update query
-        
-        if (s.contains("select")) { //query to update score
+
+        if (s.contains("select")) {
             Resarr = s.split("\\.");
-            if(s.contains("record")){
+            if (s.contains("record")) {
+                try {
+                    System.out.println("retreving");
+                    rs = Server.mydb.executeMyQuery(Resarr[2]);
+                    while (rs.next()) {
+                        gmaeTable += rs.getString("gameId");
+                        gmaeTable += "," + rs.getString("gameName");
+                        gmaeTable += "," + rs.getString("gameTimeEnded");
+                        gmaeTable += "," + rs.getString("moves");
+                        gmaeTable += "," + rs.getString("playerId1");
+                        gmaeTable += "," + rs.getString("playerId2");
+                        gmaeTable += ";";
+                        //this.ps.println("Replay:"+rs.getString("moves"));
+                        //System.out.println("Replay:"+rs.getString("moves")); 
+                    }
+
+                    this.ps.println("GameTable;" + gmaeTable);
+                } catch (SQLException ex) {
+                    Logger.getLogger(ChatHandler.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else if (s.startsWith("db.replay")) {
                 try {
                     System.out.println("retreving");
                     rs = Server.mydb.executeMyQuery(Resarr[2]);
                     if (rs.next()) {
-                        this.ps.println("Replay:"+rs.getString("moves")); //I need username and password
-                        System.out.println("Replay:"+rs.getString("moves")); 
+
+                        this.ps.println("Replay:" + rs.getString("moves"));
+                        //System.out.println("Replay:"+rs.getString("moves")); 
                     }
                 } catch (SQLException ex) {
                     Logger.getLogger(ChatHandler.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }
-            else if (s.contains("change")) {
-                int scoreToCheck;
-                Resarr = s.split("\\,");
-                try {
-                    rs = Server.mydb.executeMyQuery(Resarr[2]);
-
-                    if (rs.next()) {
-                        //getting data from resultset
-                        scoreToCheck = rs.getInt("playerScore");
-
-                    } else {
-                        scoreToCheck = -1; //no value returned
-
-                    }
-                    int gameScore = Integer.parseInt(Resarr[3]);   //score from play
-                    if (gameScore > scoreToCheck) {
-                        String updateScore = "update player set playerScore =   " + "'" + gameScore + "'   where playerUsername= " + "'" + Resarr[4] + "'   ";
-                        try {
-                            int uu = Server.mydb.executeMyUpdate(updateScore);
-                            System.out.println("Server file: update done successfully");
-                        } catch (SQLException ex) {
-                            Logger.getLogger(ChatHandler.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-
-                    } else {
-                        System.out.println("Already Max score....");
-                    }
-
-                } catch (SQLException ex) {
-                    System.out.println("Update did not succeed");
-                    Logger.getLogger(ChatHandler.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            } //query from signing:
-            else {
-                Resarr = s.split("\\.");
+            } else {
                 try {
                     rs = Server.mydb.executeMyQuery(Resarr[2]);
                     //user exists
@@ -149,22 +159,23 @@ class ChatHandler extends Thread {
                         //getting data from resultset
                         String nameToCheck = rs.getString("playerUsername");
                         String passwordToCheck = rs.getString("playerPassword");
-                        
                         //deciding to send to sign in file or sign up file:
                         if (s.contains("in")) {
-                            clientsVector.lastElement().ps.println("db,in," + nameToCheck + "," + passwordToCheck); //I need username and password
-                            userVector.add(new User(1,nameToCheck,this,2));
+                            playerInfo.playerName = nameToCheck;
+                            this.playerInfo.playerId = rs.getInt("playerId");
+                            this.ps.println("db,in," + nameToCheck + "," + passwordToCheck + ":" + this.playerInfo.playerId); //I need username and password
+                            this.clients.put(this.playerInfo.playerId, this);
                         } else if (s.contains("up")) {
-                            clientsVector.lastElement().ps.println("db,up," + nameToCheck); // I need user name only in sign up (if user name exists then player already exists)
+                            this.ps.println("db,up," + nameToCheck); // I need user name only in sign up (if user name exists then player already exists)
                         }
 
                     } //user doesnot exist
                     else {
 
                         if (s.contains("in")) {
-                            clientsVector.lastElement().ps.println("db,in,notExist");
+                            this.ps.println("db,in,notExist");
                         } else if (s.contains("up")) {
-                            clientsVector.lastElement().ps.println("db,up,notExist");
+                            this.ps.println("db,up,notExist");
                         }
 
                     }
@@ -174,7 +185,6 @@ class ChatHandler extends Thread {
                 }
             }
         } else if (s.contains("update")) {
-            System.out.println("Server file: " + s);
             Resarr = s.split("\\.");
             try {
                 u = Server.mydb.executeMyUpdate(Resarr[1]);
@@ -189,7 +199,7 @@ class ChatHandler extends Thread {
                 String[] insertArr2 = s.split("\\*");
 
                 try {
-                    int uuu = Server.mydb.executeMyPrepared(insertArr2[2], 1, insertArr2[3], 2, insertArr2[4], 3, insertArr2[5]);
+                    int uuu = Server.mydb.executeMyPreparedrec(insertArr2[2], 1, insertArr2[3], 2, insertArr2[4], 3, insertArr2[5], 4, insertArr2[6]);
                 } catch (SQLException ex) {
                     System.out.println("failed to insert record.....");
                     Logger.getLogger(ChatHandler.class.getName()).log(Level.SEVERE, null, ex);
@@ -215,5 +225,4 @@ class ChatHandler extends Thread {
             }
         }
     }
-
 }

@@ -73,15 +73,12 @@ public class buttonsBase extends Pane {
         button0.setText("Multi Mode");
         button0.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         button0.setOnAction(Action -> {
-            Client.ps.println("Two Players Game");
-            multi = new MultiPlayer();
-            MenuGame.root.getChildren().add(multi);
-            MenuGame.viewPane(multi);
-            //change player status to playing
+            Client.ps.println("Two Players Game"+":"+SignInController.userId);
             String updateState = "update player set playerStatus = 'playing' where playerUsername= " + "'" + SignInController.userNameFieldText + "' and playerPassword = " + "'" + SignInController.passwordFieldText + "' ";
             String updateString = "db.".concat(updateState);
             Client.ps.println(updateString);
-
+            MenuGame.viewPane(MenuGame.multiPlayerPane);
+            System.out.println("I update palyer status,let's begin.");
         });
 
         button1.setId("button");

@@ -59,6 +59,17 @@ public class DataBase {
         num = stmt2.executeUpdate();
         return num;
     }
+    
+    
+    public int executeMyPreparedrec(String queryString2, int x, String xx, int y, String yy, int z, String zz,int z1, String zz1) throws SQLException {
+        stmt2 = con.prepareStatement(queryString2);
+        stmt2.setString(x, xx);
+        stmt2.setString(y, yy);
+        stmt2.setString(z, zz);
+        stmt2.setString(z1, zz1);
+        num = stmt2.executeUpdate();
+        return num;
+    }
 
     public void closeConnection() throws SQLException {
         stmt.close();

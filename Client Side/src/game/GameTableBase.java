@@ -49,7 +49,6 @@ public class GameTableBase extends TableView {
 
         setPrefSize(880, 580);
 
-        // حتى نستغل كل الحجم الذي حجزناه له table هنا قمنا بتحديد عرض كل عامود بداخل الكائن
         columnId.setPrefWidth(144);
         columnName.setPrefWidth(144);
         columnGameTimeEnded.setPrefWidth(150);
@@ -58,7 +57,6 @@ public class GameTableBase extends TableView {
         columnplayerId2.setPrefWidth(150);
         columnMoves.setPrefWidth(150);
 
-        // في النافذة table هنا قمنا بتحديد مكان ظهور الكائن
         setTranslateX(10);
         setTranslateY(10);
 
@@ -71,7 +69,6 @@ public class GameTableBase extends TableView {
                     MyGame clickedRow = row.getItem();
                     String s = "db.replay.select * FROM game WHERE gameId=" + clickedRow.getGameId();
                     Client.ps.println(s);
-
                 }
             });
             return row;

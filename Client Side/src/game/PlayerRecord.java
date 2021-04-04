@@ -31,6 +31,8 @@ import java.net.*;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.scene.control.Alert.AlertType;
@@ -48,7 +50,7 @@ public class PlayerRecord extends BorderPane {
     protected final RowConstraints rowConstraints0;
     protected final RowConstraints rowConstraints1;
     protected static Button[] locations = new Button[9];
-    protected final Button RestartBt;
+
     protected final Button BackBt;
     protected final Text currentplayer;
     protected final Text player1;
@@ -62,7 +64,7 @@ public class PlayerRecord extends BorderPane {
     protected final Text text8;
     protected final Text playerx;
     protected final Text playero;
-    protected final Button recordbtn;
+
     static boolean drawFlag;
     static boolean recordflag;
     volatile boolean xTurn;
@@ -74,23 +76,26 @@ public class PlayerRecord extends BorderPane {
     private int xCount;
     private int oCount;
 
-    ArrayList<String> moves = new ArrayList<String>();
-    StringBuilder clinetmoves;
-    String str_clintmoves;
     PauseTransition pause;
     Timer timer;
     boolean replay;
     String name1;
-    boolean finished ;
-
+    boolean finished;
+    Button RestartBt;
+    Button recordbtn;
 /////////////////////////////////////////////
     int i;
+    PauseTransition newGameTrans;
 
     public PlayerRecord() {
         timer = new Timer(true);
 
         System.out.println("Constructur ");
-        pause = new PauseTransition(Duration.millis(20000));
+        newGameTrans = new PauseTransition(Duration.millis(1500));
+        newGameTrans.setOnFinished(
+                e -> {
+                    newGame();
+                });
 
         clickCounter = 0;
         xCount = 0;
@@ -108,7 +113,7 @@ public class PlayerRecord extends BorderPane {
         rowConstraints1 = new RowConstraints();
         drawFlag = false;
         recordflag = false;
-        clinetmoves = new StringBuilder();
+      
         for (int i = 0; i < locations.length; i++) {
             locations[i] = new Button();
         }
@@ -299,7 +304,7 @@ public class PlayerRecord extends BorderPane {
         RestartBt.setMnemonicParsing(false);
         RestartBt.setPrefHeight(50.0);
         RestartBt.setPrefWidth(140.0);
-        RestartBt.setText("Replay");
+        RestartBt.setText("Exit");
         RestartBt.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
 
         ///restart Button
@@ -307,8 +312,7 @@ public class PlayerRecord extends BorderPane {
             @Override
             public void handle(ActionEvent event) {
                 //Client.ps.println("Restart");
-                newGame();
-                rePlayGame(myRecord);
+                System.exit(0);
             }
         });
 
@@ -328,6 +332,10 @@ public class PlayerRecord extends BorderPane {
         BackBt.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         BackBt.setOnAction((Action) -> {
             newGame();
+            oCount = 0;
+            xCount = 0;
+            scoreplayer1.setText("0");
+            scoreplayer2.setText("0");
             MenuGame.viewPane(MenuGame.recordTable);
         });
         currentplayer.setLayoutX(355.0);
@@ -412,15 +420,11 @@ public class PlayerRecord extends BorderPane {
         recordbtn.setMnemonicParsing(false);
         recordbtn.setPrefHeight(57.0);
         recordbtn.setPrefWidth(109.0);
-        recordbtn.setText("REC");
+        recordbtn.setText("RePlay");
         recordbtn.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         pane.setPadding(new Insets(10.0, 10.0, 0.0, 100.0));
         setCenter(pane);
 
-        recordbtn.setOnAction((ActionEvent event) -> {
-            recordflag = true;
-            recordbtn.setText("REC(now)");
-        });
 
 //        System.out.println("MySymbol"+beginBase.client.id);   
         //  newGame();
@@ -463,7 +467,6 @@ public class PlayerRecord extends BorderPane {
     /**
      * *********************************************************************************************
      */
-    
     protected void incrementScore() {
         scoreplayer1.setText(String.valueOf(xCount));
         scoreplayer2.setText(String.valueOf(oCount));
@@ -476,7 +479,6 @@ public class PlayerRecord extends BorderPane {
                 MenuGame.viewPane(MenuGame.youWin);
                 MenuGame.youWin.player.play();
             } else if ("O".equals(beginBase.client.id)) {
-
                 MenuGame.viewPane(MenuGame.lose);
             }
         } else if ("5".equals(scoreplayer2.getText())) {
@@ -510,9 +512,9 @@ public class PlayerRecord extends BorderPane {
                 oCount++;
             }
             incrementScore();
-            
-            timer.cancel();
-            newGame();
+
+            //timer.cancel();
+            newGameTrans.play();
 
         } else if (location4.equals(location5) && location4.equals(location6) && !location4.equals("")) {
             if ("X".equals(currentplayer.getText())) {
@@ -521,9 +523,9 @@ public class PlayerRecord extends BorderPane {
                 oCount++;
             }
             incrementScore();
-           
-            timer.cancel();
-            newGame();
+
+            //timer.cancel();
+            newGameTrans.play();
         } // 
         else if (location7.equals(location8) && location7.equals(location9) && !location7.equals("")) {
             if ("X".equals(currentplayer.getText())) {
@@ -532,9 +534,9 @@ public class PlayerRecord extends BorderPane {
                 oCount++;
             }
             incrementScore();
-           
-            timer.cancel();
-              newGame();
+
+            //timer.cancel();
+            newGameTrans.play();
         } // 
         else if (location1.equals(location4) && location1.equals(location7) && !location1.equals("")) {
             if ("X".equals(currentplayer.getText())) {
@@ -543,9 +545,9 @@ public class PlayerRecord extends BorderPane {
                 oCount++;
             }
             incrementScore();
-           
-            timer.cancel();
-            //newGame();
+
+            //timer.cancel();
+            newGameTrans.play();
         } else if (location2.equals(location5) && location2.equals(location8) && !location2.equals("")) {
             if ("X".equals(currentplayer.getText())) {
                 xCount++;
@@ -553,9 +555,9 @@ public class PlayerRecord extends BorderPane {
                 oCount++;
             }
             incrementScore();
-          
-            timer.cancel();
-            newGame();
+
+            //timer.cancel();
+            newGameTrans.play();
         } // 
         else if (location3.equals(location6) && location3.equals(location9) && !location3.equals("")) {
             if ("X".equals(currentplayer.getText())) {
@@ -564,9 +566,9 @@ public class PlayerRecord extends BorderPane {
                 oCount++;
             }
             incrementScore();
-           
-            timer.cancel();
-            newGame();
+
+            newGameTrans.play();
+
         } // 
         else if (location1.equals(location5) && location1.equals(location9) && !location1.equals("")) {
             if ("X".equals(currentplayer.getText())) {
@@ -575,9 +577,9 @@ public class PlayerRecord extends BorderPane {
                 oCount++;
             }
             incrementScore();
-            
-            timer.cancel();
-            newGame();
+
+            newGameTrans.play();
+
         } // 
         else if (location3.equals(location5) && location3.equals(location7) && !location3.equals("")) {
             if ("X".equals(currentplayer.getText())) {
@@ -586,25 +588,20 @@ public class PlayerRecord extends BorderPane {
                 oCount++;
             }
             incrementScore();
-           
-            timer.cancel();
-              newGame();
+
+            newGameTrans.play();
+
+        } else if (clickCounter >= 9) {
+            Alert a = new Alert(AlertType.INFORMATION);
+            a.setContentText("Tied,Try Again!");
+            a.show();
+            clickCounter = 0;
+            newGameTrans.play();
         }
 
         if ("5".equals(scoreplayer1.getText()) || "5".equals(scoreplayer2.getText())) {
             winLose();
         }
-
-        if (clickCounter >= 9) {
-            Alert a = new Alert(AlertType.INFORMATION);
-            a.setContentText("Tied,Try Again!");
-            a.show();
-            clickCounter = 0;
-            timer.cancel();
-            newGame();
-
-        }
-
     }
 
     void drawSymbol(String message) {
@@ -641,8 +638,9 @@ public class PlayerRecord extends BorderPane {
                 locations[8].setText(arrOfStr[1]);
                 break;
         }
-      
+
         winningGame();
+
         if ("X".equals(currentplayer.getText())) {
             currentplayer.setText("O");
         } else if ("O".equals(currentplayer.getText())) {
@@ -650,23 +648,18 @@ public class PlayerRecord extends BorderPane {
         }
     }
 
-   
-
     void newGame() {
-        
+
         clickCounter = 0;
+        gameEnd = false;
         for (int i = 0; i < locations.length; i++) {
             locations[i].setText("");
         }
-        
-        scoreplayer1.setText("0");
-        scoreplayer2.setText("0");
-        xCount = 0;
-        oCount = 0;
 
     }
 
     void rePlayGame(String s) {
+
         myRecord = s;
         currentplayer.setText("X");
         finished = false;

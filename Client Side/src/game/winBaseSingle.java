@@ -30,6 +30,7 @@ public  class winBaseSingle extends Pane {
         button.setText("Back To Menu");
          button.addEventHandler(ActionEvent.ACTION, (ActionEvent e) -> {
                 MenuGame.viewPane(MenuGame.startPane);
+                MenuGame.singlePlayerPane.restartGame();
             });
         button0.setId("button-win");
         button0.setLayoutX(552.0);

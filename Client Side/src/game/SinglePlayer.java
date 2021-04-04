@@ -308,6 +308,7 @@ public  class SinglePlayer extends BorderPane {
             String updateState = "update player set playerStatus = 'idle' where playerUsername= " + "'" + SignInController.userNameFieldText + "' and playerPassword = " + "'" + SignInController.passwordFieldText + "' ";
             String updateString = "db.".concat(updateState);
             Client.ps.println(updateString);
+            restartGame();
         });
 
         text.setLayoutX(355.0);
@@ -589,12 +590,10 @@ public  class SinglePlayer extends BorderPane {
     }
     
     
-    private void restartGame() {
-
+    public void restartGame() {
         newGame();
         text3.setText("0");
         text7.setText("0");
-
     }
     
       void newGame() {

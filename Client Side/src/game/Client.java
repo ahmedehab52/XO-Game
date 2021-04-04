@@ -28,6 +28,8 @@ public class Client implements Runnable {
     String id;
     String name1;
     String name2;
+    String Id1;
+    String Id2;
 
     public Client(String address) {
         try {
@@ -62,15 +64,16 @@ public class Client implements Runnable {
                 if ("O".equals(s) || "X".equals(s)) {
                     {
                         //System.out.println(s);
+                        //symbole
                         id = s;
                         Platform.runLater(() -> {
                             if ("X".equals(beginBase.client.id)) {
                                 // MenuGame.singlePlayerPane.text1.setText(userNameFieldText);
                                 MenuGame.multiPlayerPane.nameplayer1.setText(userNameFieldText);
-                                ps.println("Xuser." + userNameFieldText);
+                                ps.println("Xuser." + userNameFieldText+":XId."+SignInController.userId);
                             } else if ("O".equals(beginBase.client.id)) {
                                 MenuGame.multiPlayerPane.nameplayer2.setText(userNameFieldText);
-                                ps.println("Ouser." + userNameFieldText);
+                                ps.println("Ouser." + userNameFieldText+":OId."+SignInController.userId);
                             }
                             MenuGame.multiPlayerPane.newGame();
                         });
@@ -98,7 +101,9 @@ public class Client implements Runnable {
                             SignUpController.userCheck(s);
                         });
                     }
-
+                    else if(s.startsWith("gameInfo")){
+                         System.out.println("myGam:"+s);
+                    }
                 } else if (s.contains("Single")) {
                     Platform.runLater(() -> {
                         MenuGame.singlePlayerPane.drawSymbol(s);
@@ -115,20 +120,27 @@ public class Client implements Runnable {
                     });
                 } else if (s.contains("Xuser")) {
                     Platform.runLater(() -> {
-                        String[] arr = s.split("\\.");
+                        String [] arr1=s.split("\\:");
+                        String[] arr = arr1[0].split("\\.");
                         name1 = arr[1];
+                        String[] arr2 = arr1[1].split("\\.");
+                        Id1 = arr2[1];
                         MenuGame.multiPlayerPane.nameplayer1.setText(arr[1]);
                     });
                 } else if (s.contains("Ouser")) {
                     Platform.runLater(() -> {
-                        String[] arr = s.split("\\.");
+                         String [] arr1=s.split("\\:");
+                        String[] arr = arr1[0].split("\\.");
                         name2 = arr[1];
+                        String[] arr2 = arr1[1].split("\\.");
+                        Id2 = arr2[1];
                         MenuGame.multiPlayerPane.nameplayer2.setText(arr[1]);
                     });
                 }
 
             } catch (IOException ex) {
-                System.out.println("no data found to read it from socket");
+                System.out.println("Server Is Not Available");
+                System.exit(0);
             }
         }
     }

@@ -5,20 +5,29 @@
  */
 package servertry2;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author ELROWAD
  */
 public class Game {
-   int id;
-   String name;
-   ChatHandler ch;
-   int score;
+    String gameId;
+    String gameTimeEnded;
+    String moves;
+    String playerId1;
+    String playerId2;
+    
+    public Game(String playerId1, String playerId2){
+        this.gameId = gameId;
+        this.gameTimeEnded = gameTimeEnded;
+        this.playerId1 = playerId1;
+        this.playerId2 = playerId2;
+    }
    
-   void addUser(int id,String name,ChatHandler ch,int score){
-       this.id    = id;
-       this.name  = name;
-       this.ch    = ch;
-       this.score = score;
-   }
+   
+   
 }

@@ -47,6 +47,7 @@ public class SignInController implements Initializable {
     static String userNameFieldText;
     static String passwordFieldText;
     static String serverData;
+    static String userId;
     @FXML
     private TextField textemail;
     @FXML
@@ -106,7 +107,10 @@ public class SignInController implements Initializable {
 
         } else {
             System.out.println("Now,you can start your Game.");
-            
+            System.out.println(s);
+            String []arr = s.split("\\:");
+            System.out.println(arr[1]);
+            userId = arr[1];
             
             MenuGame.singlePlayerPane.text1.setText(userNameFieldText);
             //update player state to connected

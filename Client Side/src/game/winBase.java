@@ -29,6 +29,7 @@ public  class winBase extends Pane {
         button.setMnemonicParsing(false);
         button.setText("Back To Menu");
          button.addEventHandler(ActionEvent.ACTION, (ActionEvent e) -> {
+                MenuGame.multiPlayerPane.restartGame();
                 MenuGame.viewPane(MenuGame.startPane);
             });
         button0.setId("button-win");

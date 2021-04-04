@@ -16,7 +16,9 @@ public class serverpageBase extends Pane {
     static  TextField textField;
     static  TextField textField0;
     static  Button button;
-
+    static String name;
+    static String pass;
+    
     public serverpageBase() {
 
         label = new Label();
@@ -64,8 +66,8 @@ public class serverpageBase extends Pane {
      //   button.getStylesheets().add("/serverpage/serverpage.css");
         button.setText("Submit");
         button.setOnAction((ActionEvent event) -> {
-            String name = textField.getText();
-            String pass = textField0.getText();
+             name = textField.getText();
+            pass = textField0.getText();
             Server myServer = new Server(name,pass);
            // label.setText("Sign In To DataBase");
         });

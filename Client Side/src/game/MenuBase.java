@@ -143,7 +143,7 @@ public class MenuBase extends Pane {
         button3.setText("Records");
         button3.setOnAction(Action -> {
              System.out.println("replay");
-             String s = "db.record.select * FROM game WHERE playerId1 = 1 and playerId2=2";
+             String s = "db.record.select * FROM game WHERE playerId1 = "+SignInController.userId+" or playerId2="+SignInController.userId+";";
              Client.ps.println(s);
               MenuGame.viewPane(MenuGame.recordTable);
         });

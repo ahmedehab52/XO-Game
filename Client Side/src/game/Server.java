@@ -87,10 +87,8 @@ class ChatHandler extends Thread
                                     dbQuery(str);
                                 }
                                 else if("Two Players Game".equals(str)){
-                                   
                                     ps.println(id);
                                       id = "O";
-                                      
                                 }
                             
                                 else if(str.contains("Rec"))
@@ -100,7 +98,6 @@ class ChatHandler extends Thread
                                 }
                                 else if(str.contains("Replay"))
                                       sendMessageToAll(myRec);
-                               
                                 else
                                 {
                                     System.out.println(str);

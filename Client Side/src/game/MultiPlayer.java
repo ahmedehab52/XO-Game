@@ -9,8 +9,6 @@ package game;
  *
  * @author ELROWAD
  */
-
-
 import static game.MenuGame.root;
 import java.awt.Toolkit;
 import java.util.Optional;
@@ -21,7 +19,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
-import javafx.scene.effect.Glow; 
+import javafx.scene.effect.Glow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
@@ -40,8 +38,7 @@ import javafx.scene.control.Alert.AlertType;
 import static javafx.scene.layout.Region.USE_PREF_SIZE;
 import javafx.util.Duration;
 
-
-public  class MultiPlayer extends BorderPane {
+public class MultiPlayer extends BorderPane {
 
     protected final Pane pane;
     protected final GridPane gridPane;
@@ -51,7 +48,7 @@ public  class MultiPlayer extends BorderPane {
     protected final RowConstraints rowConstraints;
     protected final RowConstraints rowConstraints0;
     protected final RowConstraints rowConstraints1;
-       protected static Button[] locations = new Button[9];
+    protected static Button[] locations = new Button[9];
     protected final Button RestartBt;
     protected final Button BackBt;
     protected final Text currentplayer;
@@ -67,37 +64,35 @@ public  class MultiPlayer extends BorderPane {
     protected final Text playerx;
     protected final Text playero;
     protected final Button recordbtn;
-	static boolean drawFlag;
-        static boolean recordflag;
-        volatile boolean xTurn;
-        int clickCounter; 
-	boolean gameEnd ;
-   String myRec;
-    
+    static boolean drawFlag;
+    static boolean recordflag;
+    volatile boolean xTurn;
+    int clickCounter;
+    boolean gameEnd;
+    String myRec;
+
     protected String startGame = "X";
-   private int xCount ;
-   private int oCount;
-    
-    ArrayList<String> moves =new ArrayList<String>();
-    StringBuilder clinetmoves ;
+    private int xCount;
+    private int oCount;
+
+    ArrayList<String> moves = new ArrayList<String>();
+    StringBuilder clinetmoves;
     String str_clintmoves;
-     PauseTransition pauseTrans;
+    PauseTransition pauseTrans;
     Timer timer;
     boolean replay;
     String name1;
 /////////////////////////////////////////////
-    
-    
 
     public MultiPlayer() {
-         timer = new Timer();
+        timer = new Timer();
         // timer.schedule(new Runnable(){,0,1*1000);
         System.out.println("Constructur ");
-       // pauseTrans = new PauseTransition(Duration.millis(5000));
+        // pauseTrans = new PauseTransition(Duration.millis(5000));
         replay = false;
-      clickCounter = 0;
-        xCount=0;
-        oCount=0;
+        clickCounter = 0;
+        xCount = 0;
+        oCount = 0;
         clickCounter = 0;
         gameEnd = false;
         xTurn = true;
@@ -109,17 +104,13 @@ public  class MultiPlayer extends BorderPane {
         rowConstraints = new RowConstraints();
         rowConstraints0 = new RowConstraints();
         rowConstraints1 = new RowConstraints();
-		drawFlag=false;
-                recordflag=false;
-                clinetmoves = new StringBuilder();
+        drawFlag = false;
+        recordflag = false;
+        clinetmoves = new StringBuilder();
         for (int i = 0; i < locations.length; i++) {
             locations[i] = new Button();
         }
-		
-	
-	
-		
-		
+
         RestartBt = new Button();
         BackBt = new Button();
         currentplayer = new Text();
@@ -151,7 +142,7 @@ public  class MultiPlayer extends BorderPane {
         pane.setMinWidth(USE_PREF_SIZE);
         pane.setPrefHeight(602.0);
         pane.setPrefWidth(806.0);
-    //    pane.getStylesheets().add("mycss.css");
+        //    pane.getStylesheets().add("mycss.css");
 
         gridPane.setAlignment(javafx.geometry.Pos.CENTER);
         gridPane.setLayoutX(201.0);
@@ -196,8 +187,7 @@ public  class MultiPlayer extends BorderPane {
         locations[0].setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         GridPane.setMargin(locations[0], new Insets(5.0));
         locations[0].setPadding(new Insets(10.0, 0.0, 0.0, 0.0));
-	
-	
+
         GridPane.setColumnIndex(locations[1], 1);
         locations[1].setAlignment(javafx.geometry.Pos.CENTER);
         locations[1].setContentDisplay(javafx.scene.control.ContentDisplay.CENTER);
@@ -298,8 +288,7 @@ public  class MultiPlayer extends BorderPane {
         locations[8].setPrefWidth(107.0);
         locations[8].setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         GridPane.setMargin(locations[8], new Insets(5.0));
-      
-        
+
         RestartBt.setAlignment(javafx.geometry.Pos.BASELINE_CENTER);
         RestartBt.setId("resback");
         RestartBt.setLayoutX(639.0);
@@ -310,23 +299,14 @@ public  class MultiPlayer extends BorderPane {
         RestartBt.setPrefWidth(140.0);
         RestartBt.setText("Restart");
         RestartBt.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
-        
-        
+
         ///restart Button
-         RestartBt.setOnAction(new EventHandler<ActionEvent>() {
+        RestartBt.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-              Client.ps.println("Restart");
+                Client.ps.println("Restart");
             }
-         });
-        
-        
-        
-        
-        
-        
-   
-        
+        });
 
         BackBt.setAlignment(javafx.geometry.Pos.CENTER);
         BackBt.setContentDisplay(javafx.scene.control.ContentDisplay.CENTER);
@@ -349,7 +329,7 @@ public  class MultiPlayer extends BorderPane {
             String updateState = "update player set playerStatus = 'idle' where playerUsername= " + "'" + SignInController.userNameFieldText + "' and playerPassword = " + "'" + SignInController.passwordFieldText + "' ";
             String updateString = "db.".concat(updateState);
             Client.ps.println(updateString);
-            
+
         });
         currentplayer.setLayoutX(355.0);
         currentplayer.setLayoutY(49.0);
@@ -437,23 +417,19 @@ public  class MultiPlayer extends BorderPane {
         recordbtn.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         pane.setPadding(new Insets(10.0, 10.0, 0.0, 100.0));
         setCenter(pane);
-        
+
         recordbtn.setOnAction((ActionEvent event) -> {
-            recordflag=true;
+            recordflag = true;
             recordbtn.setText("REC(now)");
         });
-        
-       
+
 //        System.out.println("MySymbol"+beginBase.client.id);   
         for (Button location : locations) {
             location.addEventHandler(ActionEvent.ACTION, (ActionEvent e) -> {
                 actionOnClickedButton((Button) e.getSource());
             });
         }
-       
-       
-       
-        
+
         System.out.println("End of Constructor");
         gridPane.getColumnConstraints().add(columnConstraints);
         gridPane.getColumnConstraints().add(columnConstraints0);
@@ -470,12 +446,7 @@ public  class MultiPlayer extends BorderPane {
         gridPane.getChildren().add(locations[6]);
         gridPane.getChildren().add(locations[7]);
         gridPane.getChildren().add(locations[8]);
-		
-	
-        
-		
-      
-       
+
         pane.getChildren().add(gridPane);
         pane.getChildren().add(RestartBt);
         pane.getChildren().add(BackBt);
@@ -492,56 +463,41 @@ public  class MultiPlayer extends BorderPane {
         pane.getChildren().add(playerx);
         pane.getChildren().add(playero);
         pane.getChildren().add(recordbtn);
-        
-    
-       
-       
-       
+
     }
-	
-  /************************************************************************************************/
-   
-     
-    protected void incrementScore()
-    {
+
+    /**
+     * *********************************************************************************************
+     */
+    protected void incrementScore() {
         scoreplayer1.setText(String.valueOf(xCount));
         scoreplayer2.setText(String.valueOf(oCount));
     }
-    
-    void winLose(){
-        
-          if ("5".equals(scoreplayer1.getText())){
-              if("X".equals(beginBase.client.id))
-              {
-                         MenuGame.viewPane(MenuGame.youWin);
-                          MenuGame.youWin.player.play();   
-              }
-		      
-              else if("O".equals(beginBase.client.id)){
-               
-                                 MenuGame.viewPane(MenuGame.lose);
-              }
-          }
-		   
-           else if ("5".equals(scoreplayer2.getText())){
-              if("O".equals(beginBase.client.id))
-              {
-					
-                                                 MenuGame.viewPane(MenuGame.youWin);
-                                                 MenuGame.youWin.player.play();   
-			  }
-		      
-              else if("X".equals(beginBase.client.id)){
-                
-                                   MenuGame.viewPane(MenuGame.lose);
-              }
-       }
+
+    void winLose() {
+
+        if ("5".equals(scoreplayer1.getText())) {
+            if ("X".equals(beginBase.client.id)) {
+                beginBase.client.ps.println("db." + "update player set playerScore=playerScore+1 where playerId=" + beginBase.client.Id1 + ";");
+                MenuGame.viewPane(MenuGame.youWin);
+                MenuGame.youWin.player.play();
+            } else if ("O".equals(beginBase.client.id)) {
+
+                MenuGame.viewPane(MenuGame.lose);
+            }
+        } else if ("5".equals(scoreplayer2.getText())) {
+            if ("O".equals(beginBase.client.id)) {
+                beginBase.client.ps.println("db." + "update player set playerScore=playerScore+1 where playerId=" + beginBase.client.Id2 + ";");
+                MenuGame.viewPane(MenuGame.youWin);
+                MenuGame.youWin.player.play();
+            } else if ("X".equals(beginBase.client.id)) {
+
+                MenuGame.viewPane(MenuGame.lose);
+            }
+        }
     }
-     
-    
-    
-    protected void winningGame()
-    {
+
+    protected void winningGame() {
         String location1 = locations[0].getText();
         String location2 = locations[1].getText();
         String location3 = locations[2].getText();
@@ -551,363 +507,283 @@ public  class MultiPlayer extends BorderPane {
         String location7 = locations[6].getText();
         String location8 = locations[7].getText();
         String location9 = locations[8].getText();
-  
-        
-        
-       if (location1.equals(location2) && location1.equals(location3) && !location1.equals("")) {
-      
-         if("X".equals(currentplayer.getText()))
-            { 
+
+        if (location1.equals(location2) && location1.equals(location3) && !location1.equals("")) {
+
+            if ("X".equals(currentplayer.getText())) {
                 xCount++;
+            } else if ("O".equals(currentplayer.getText())) {
+                oCount++;
             }
-        
-            else if("O".equals(currentplayer.getText()))
-           { 
-                     oCount++;
-           }
             incrementScore();
 //            record();
             newGame();
-            
-            
-        }
- 
-       else if (location4.equals(location5) && location4.equals(location6) && !location4.equals("")) {
-        if("X".equals(currentplayer.getText()))
-            { 
+
+        } else if (location4.equals(location5) && location4.equals(location6) && !location4.equals("")) {
+            if ("X".equals(currentplayer.getText())) {
                 xCount++;
+            } else if ("O".equals(currentplayer.getText())) {
+                oCount++;
             }
-        
-            else if("O".equals(currentplayer.getText()))
-           { 
-                     oCount++;
-           }
             incrementScore();
 //            record();
             newGame();
-        }
-// 
-     else if (location7 .equals(location8) && location7 .equals(location9) && !location7 .equals("")) {
-           if("X".equals(currentplayer.getText()))
-            { 
+        } // 
+        else if (location7.equals(location8) && location7.equals(location9) && !location7.equals("")) {
+            if ("X".equals(currentplayer.getText())) {
                 xCount++;
+            } else if ("O".equals(currentplayer.getText())) {
+                oCount++;
             }
-        
-            else if("O".equals(currentplayer.getText()))
-           { 
-                     oCount++;
-           }
             incrementScore();
 //            record();
-              newGame();
-        }
-// 
-       else if (location1.equals(location4) && location1.equals(location7 ) && !location1.equals("")) {
-            if("X".equals(currentplayer.getText()))
-            { 
+            newGame();
+        } // 
+        else if (location1.equals(location4) && location1.equals(location7) && !location1.equals("")) {
+            if ("X".equals(currentplayer.getText())) {
                 xCount++;
+            } else if ("O".equals(currentplayer.getText())) {
+                oCount++;
             }
-        
-            else if("O".equals(currentplayer.getText()))
-           { 
-                     oCount++;
-           }
             incrementScore();
 //            record();
-              newGame();
+            newGame();
+        } else if (location2.equals(location5) && location2.equals(location8) && !location2.equals("")) {
+            if ("X".equals(currentplayer.getText())) {
+                xCount++;
+            } else if ("O".equals(currentplayer.getText())) {
+                oCount++;
+            }
+            incrementScore();
+//            record();
+            newGame();
+        } // 
+        else if (location3.equals(location6) && location3.equals(location9) && !location3.equals("")) {
+            if ("X".equals(currentplayer.getText())) {
+                xCount++;
+            } else if ("O".equals(currentplayer.getText())) {
+                oCount++;
+            }
+            incrementScore();
+//            record();
+            newGame();
+        } // 
+        else if (location1.equals(location5) && location1.equals(location9) && !location1.equals("")) {
+            if ("X".equals(currentplayer.getText())) {
+                xCount++;
+            } else if ("O".equals(currentplayer.getText())) {
+                oCount++;
+            }
+            incrementScore();
+//            record();
+            newGame();
+        } // 
+        else if (location3.equals(location5) && location3.equals(location7) && !location3.equals("")) {
+            if ("X".equals(currentplayer.getText())) {
+                xCount++;
+            } else if ("O".equals(currentplayer.getText())) {
+                oCount++;
+            }
+            incrementScore();
+//            record();
+            newGame();
         }
 
-       else if (location2.equals(location5) && location2.equals(location8) && !location2.equals("")) {
-            if("X".equals(currentplayer.getText()))
-            { 
-                xCount++;
-            }
-        
-            else if("O".equals(currentplayer.getText()))
-           { 
-                     oCount++;
-           }
-            incrementScore();
-//            record();
-              newGame();
+        if ("5".equals(scoreplayer1.getText()) || "5".equals(scoreplayer2.getText())) {
+            winLose();
+            record();
         }
-// 
-       else if (location3.equals(location6) && location3.equals(location9) && !location3.equals("")) {
-             if("X".equals(currentplayer.getText()))
-            { 
-                xCount++;
-            }
-        
-            else if("O".equals(currentplayer.getText()))
-           { 
-                     oCount++;
-           }
-            incrementScore();
-//            record();
-             newGame();
-        }
-// 
-       else if (location1.equals(location5) && location1.equals(location9) && !location1.equals("")) {
-           if("X".equals(currentplayer.getText()))
-            { 
-                xCount++;
-            }
-        
-            else if("O".equals(currentplayer.getText()))
-           { 
-                     oCount++;
-           }
-            incrementScore();
-//            record();
-              newGame();
-        }
-// 
-       else if (location3.equals(location5) && location3.equals(location7 ) && !location3.equals("")) {
-         if("X".equals(currentplayer.getText()))
-            { 
-                xCount++;
-            }
-        
-            else if("O".equals(currentplayer.getText()))
-           { 
-                     oCount++;
-           }
-            incrementScore();
-//            record();
-             newGame();
-        }
-       
-       if("5".equals(scoreplayer1.getText()) || "5".equals(scoreplayer2.getText())){
-           winLose();
-           record();
-       }
-  
-        if( clickCounter >= 9)
-        {
-            Alert a = new Alert(AlertType.INFORMATION); 
+
+        if (clickCounter >= 9) {
+            Alert a = new Alert(AlertType.INFORMATION);
             a.setContentText("Tied,Try Again!");
             a.show();
             clickCounter = 0;
             newGame();
-           
-            
-        }             
-        
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    void actionOnClickedButton(Button clickedbutton){
-        System.out.println("actionOnClickedButtn");
-         System.out.println("MySymbol"+beginBase.client.id);
-   if( clickedbutton.getText().equals("")){
-       if("X".equals(beginBase.client.id)&& "X".equals(currentplayer.getText()))
-        {
-         //   nameplayer2.setText(name1);
-              for (Button location : locations) {
-                   location.setDisable(true);
-                   location.setOpacity(1.0);
-                        
-                  }
-            sendMovement(clickedbutton,"X");   
-            
+
         }
-        else if("O".equals(beginBase.client.id)&& "O".equals(currentplayer.getText()))
-        {      
-           // nameplayer1.setText(name1);
-             for (Button location : locations) {
-                        location.setDisable(true);
-                        location.setOpacity(1.0);
-                    }
-            sendMovement(clickedbutton,"O");
-            
-        }    
-     }    
-        
- }
-			
-			
-     void sendMovement(Button clickedButton, String symbol){
-         System.out.println("sendMovement");
-             if(clickedButton == locations[0])
-                   Client.ps.println("Multi."+"1"+"."+symbol);
-             
-               else if(clickedButton == locations[1])
-		    Client.ps.println("Multi."+"2"+"."+symbol);
-               
-               else if(clickedButton == locations[2])
-                    Client.ps.println("Multi."+"3"+"."+symbol);
-               else if(clickedButton == locations[3])
-                    Client.ps.println("Multi."+"4"+"."+symbol);
-             
-               else if(clickedButton == locations[4])
-                    Client.ps.println("Multi."+"5"+"."+symbol);
-             
-             else if(clickedButton == locations[5])
-                    Client.ps.println("Multi."+"6"+"."+symbol);
-             
-             else if(clickedButton == locations[6])
-                    Client.ps.println("Multi."+"7"+"."+symbol);
-             
-             else if(clickedButton == locations[7])
-                    Client.ps.println("Multi."+"8"+"."+symbol);
-             
-             else if(clickedButton == locations[8])
-                  Client.ps.println("Multi."+"9"+"."+symbol);
-          }
-      
-	  
-	  
-	  
-      void drawSymbol(String message){
-          clickCounter++;
-         String[] arrOfStr = message.split("\\.");
-	
-         if(recordflag == true)
-         {
-            moves.add(arrOfStr[1]+"."+arrOfStr[2]);
-         }
-             switch(arrOfStr[1]){
-                 case "1":
-                     locations[0].setText(arrOfStr[2]);
-                     break;
-                 case "2":
-                      locations[1].setText(arrOfStr[2]);
-                     break;
-                 case "3":
-                      locations[2].setText(arrOfStr[2]);
-                     break;
-                     
-                  case "4":
-                       locations[3].setText(arrOfStr[2]);
-                     break;
-                 case "5":
-                      locations[4].setText(arrOfStr[2]);
-                     break; 
-                 case "6":
-                      locations[5].setText(arrOfStr[2]);
-                     break;
-                 case "7":
-                      locations[6].setText(arrOfStr[2]);
-                     break;
-                 case "8":
-                      locations[7].setText(arrOfStr[2]);
-                     break;
-                 case "9":
-                      locations[8].setText(arrOfStr[2]);
-                     break;
-             }
-             if(replay == false){
-              winningGame();  
-              //  drawFlag = true;
-                  
-                if("X".equals(arrOfStr[2]) && "O".equals(beginBase.client.id)){
-                    for (Button location : locations) {
-                        location.setDisable(false);
-                    }    
-                     
+
+    }
+
+    void actionOnClickedButton(Button clickedbutton) {
+        System.out.println("actionOnClickedButtn");
+        System.out.println("MySymbol" + beginBase.client.id);
+        if (clickedbutton.getText().equals("")) {
+            if ("X".equals(beginBase.client.id) && "X".equals(currentplayer.getText())) {
+                //   nameplayer2.setText(name1);
+                for (Button location : locations) {
+                    location.setDisable(true);
+                    location.setOpacity(1.0);
+
                 }
-               
-                 else if("O".equals(arrOfStr[2]) && "X".equals(beginBase.client.id)){
-                       for (Button location : locations) {
+                sendMovement(clickedbutton, "X");
+
+            } else if ("O".equals(beginBase.client.id) && "O".equals(currentplayer.getText())) {
+                // nameplayer1.setText(name1);
+                for (Button location : locations) {
+                    location.setDisable(true);
+                    location.setOpacity(1.0);
+                }
+                sendMovement(clickedbutton, "O");
+
+            }
+        }
+
+    }
+
+    void sendMovement(Button clickedButton, String symbol) {
+        System.out.println("sendMovement");
+        if (clickedButton == locations[0]) {
+            Client.ps.println("Multi." + "1" + "." + symbol);
+        } else if (clickedButton == locations[1]) {
+            Client.ps.println("Multi." + "2" + "." + symbol);
+        } else if (clickedButton == locations[2]) {
+            Client.ps.println("Multi." + "3" + "." + symbol);
+        } else if (clickedButton == locations[3]) {
+            Client.ps.println("Multi." + "4" + "." + symbol);
+        } else if (clickedButton == locations[4]) {
+            Client.ps.println("Multi." + "5" + "." + symbol);
+        } else if (clickedButton == locations[5]) {
+            Client.ps.println("Multi." + "6" + "." + symbol);
+        } else if (clickedButton == locations[6]) {
+            Client.ps.println("Multi." + "7" + "." + symbol);
+        } else if (clickedButton == locations[7]) {
+            Client.ps.println("Multi." + "8" + "." + symbol);
+        } else if (clickedButton == locations[8]) {
+            Client.ps.println("Multi." + "9" + "." + symbol);
+        }
+    }
+
+    void drawSymbol(String message) {
+        clickCounter++;
+        String[] arrOfStr = message.split("\\.");
+
+        if (recordflag == true) {
+            moves.add(arrOfStr[1] + "." + arrOfStr[2]);
+        }
+        switch (arrOfStr[1]) {
+            case "1":
+                locations[0].setText(arrOfStr[2]);
+                break;
+            case "2":
+                locations[1].setText(arrOfStr[2]);
+                break;
+            case "3":
+                locations[2].setText(arrOfStr[2]);
+                break;
+
+            case "4":
+                locations[3].setText(arrOfStr[2]);
+                break;
+            case "5":
+                locations[4].setText(arrOfStr[2]);
+                break;
+            case "6":
+                locations[5].setText(arrOfStr[2]);
+                break;
+            case "7":
+                locations[6].setText(arrOfStr[2]);
+                break;
+            case "8":
+                locations[7].setText(arrOfStr[2]);
+                break;
+            case "9":
+                locations[8].setText(arrOfStr[2]);
+                break;
+        }
+        if (replay == false) {
+            winningGame();
+            //  drawFlag = true;
+
+            if ("X".equals(arrOfStr[2]) && "O".equals(beginBase.client.id)) {
+                for (Button location : locations) {
+                    location.setDisable(false);
+                }
+
+            } else if ("O".equals(arrOfStr[2]) && "X".equals(beginBase.client.id)) {
+                for (Button location : locations) {
 //                              location.removeEventHandler(ActionEvent.ACTION, (ActionEvent e)->{
 //                              actionOnClickedButton((sButton) e.getSource());
 //                       });
-                        location.setDisable(false);
-                    }    
+                    location.setDisable(false);
                 }
-             }
-                 if("X".equals(currentplayer.getText()))
-                     currentplayer.setText("O");
-                 else if("O".equals(currentplayer.getText()))
-                     currentplayer.setText("X");
-            
-      }
-      
-     void record(){
-         if(recordflag==true){
-          for (int i=0;i<moves.size();i++) {
-          if(i< (moves.size()-1))
-             clinetmoves.append(moves.get(i)+":");
-          else
-              clinetmoves.append(moves.get(i));
-      }
-          
-          
-        str_clintmoves = clinetmoves.toString();
-        str_clintmoves = str_clintmoves;
-        
-        //insert record into database^^:
-        String insertRec = "insert into game (moves,playerId1,playerId2) values(?,?,?)";
-               // + "//" + "'" + rec + "'," + "'" + id1 + "'  , " + "'" + id2 + "')";
-        String insertRecString ="db*record*".concat(insertRec+"*").concat(str_clintmoves+"*").concat("1"+"*").concat("2");
-        Client.ps.println(insertRecString);
-        System.out.println("me! ");
-        Client.ps.println(str_clintmoves);
-       
-        recordflag=false;
-        recordbtn.setText("REC");
-         clinetmoves.delete(0,clinetmoves.length());
-           str_clintmoves = "";
-           moves.clear();
-       }
-     
-     }
-     
-      void newGame(){
-           //System.out.println("NewGame");
-           clickCounter = 0;
-           nameplayer1.setText(beginBase.client.name1);
-           nameplayer2.setText(beginBase.client.name2);
-          
-          
-      
-        
-       for (int i=0; i<locations.length;i++) {
-            locations[i].setText("");
+            }
         }
-          
-            for (Button location : locations)
-                location.setDisable(false);
-       
-        if("X".equals(beginBase.client.id))
-        {
-            
-           for(Button location:locations)
-               location.setDisable(false);
+        if ("X".equals(currentplayer.getText())) {
+            currentplayer.setText("O");
+        } else if ("O".equals(currentplayer.getText())) {
+            currentplayer.setText("X");
         }
-        
-        else if("O".equals(beginBase.client.id)){
-             
-                         for (Button location : locations) {
-                                location.setDisable(true);
-                                location.setOpacity(1.0);
-         }
-        
-        }
-      
+
     }
 
-   
-  void restartGame(){
-               oCount=0;
-               xCount=0;
-               newGame();
-              scoreplayer1.setText("0");
-              scoreplayer2.setText("0");
-  }
-  
- 
-}
-    
- 
- 
-        
-       
- 
+    void record() {
+        if (recordflag == true) {
+            for (int i = 0; i < moves.size(); i++) {
+                if (i < (moves.size() - 1)) {
+                    clinetmoves.append(moves.get(i) + ":");
+                } else {
+                    clinetmoves.append(moves.get(i));
+                }
+            }
 
+            str_clintmoves = clinetmoves.toString();
+            str_clintmoves = str_clintmoves;
+
+            //insert record into database^^:
+            String insertRec = "insert into game (gameName,moves,playerId1,playerId2,gameTimeEnded) values(?,?,?,?,now())";
+            // + "//" + "'" + rec + "'," + "'" + id1 + "'  , " + "'" + id2 + "')";
+            String insertRecString = "db*record*".concat(insertRec + "*").concat(beginBase.client.name1 + " Vs " + beginBase.client.name2+"*").concat(str_clintmoves + "*").concat(beginBase.client.Id1 + "*").concat(beginBase.client.Id2);
+           System.out.println(insertRecString);
+            Client.ps.println(insertRecString);
+            System.out.println("me! ");
+            Client.ps.println(str_clintmoves);
+
+            recordflag = false;
+            recordbtn.setText("REC");
+            clinetmoves.delete(0, clinetmoves.length());
+            str_clintmoves = "";
+            moves.clear();
+        }
+
+    }
+
+    void newGame() {
+        //System.out.println("NewGame");
+        clickCounter = 0;
+        nameplayer1.setText(beginBase.client.name1);
+        nameplayer2.setText(beginBase.client.name2);
+
+        for (int i = 0; i < locations.length; i++) {
+            locations[i].setText("");
+        }
+
+        for (Button location : locations) {
+            location.setDisable(false);
+        }
+
+        if ("X".equals(beginBase.client.id)) {
+
+            for (Button location : locations) {
+                location.setDisable(false);
+            }
+        } else if ("O".equals(beginBase.client.id)) {
+
+            for (Button location : locations) {
+                location.setDisable(true);
+                location.setOpacity(1.0);
+            }
+
+        }
+
+    }
+
+    void restartGame() {
+        oCount = 0;
+        xCount = 0;
+        newGame();
+        scoreplayer1.setText("0");
+        scoreplayer2.setText("0");
+    }
+
+}
